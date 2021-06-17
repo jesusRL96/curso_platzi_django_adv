@@ -28,22 +28,12 @@ class CRideModel(models.Model):
     class Meta:
         """Meta option."""
 
-        asbtract = True
+        abstract = True
 
         get_latest_by = 'created'
         ordering = ['-created', '-modified']
 
-class Person(models.Model):
-    first_name = models.CharField()
-    last_name = models.CharField()
 
-class MyPerson(Person):
-    class Meta:
-        # una clase proxy permite extender funcionalidad de el modelo del que hera, sin crear una nueva tabla en la base de datos
-        proxy=True
-
-    def say_hi(name):
-        pass
 
 # MyPerson.objects.all()
 # ricardo = MyPerson.objects.get(pk=1)
