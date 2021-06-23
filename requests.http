@@ -15,18 +15,25 @@ POST http://localhost:8000/users/login/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "xxxx",
-    "password": "xxxx."
+    "email": "xxxxx",
+    "password": "xxxxx"
 }
 ###
 POST http://localhost:8000/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "pepe@pecas.com",
-    "username": "pepe",
-    "password": "12asd5sdD1.",
-    "password_confirmation": "12asd5sdD1.",
-    "first_name":"pepe",
+    "email": "xxx",
+    "username": "pepe4",
+    "password": "xxxx",
+    "password_confirmation": "xxxxx",
+    "first_name":"pepe2",
     "last_name":"pecas"
+}
+###
+POST http://localhost:8000/users/verify/ HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJ0eaasaiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoicGVwZTQiLCJleHAiOjE2MjQ3MzkzNzgsInR5cGUiOiJlbWFpbF9jb25maXJtYXRpb24ifQ._zxHOf-cogirXSkobO8Jieipzm5acDOqRz3EagUTN44"
 }

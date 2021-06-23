@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 
-from cride.users.serializers import UserLoginSerializer, UserModelSerializer, UserSignUpSerializer
+from cride.users.serializers import UserLoginSerializer, UserModelSerializer, UserSignUpSerializer,AccountVerificationSerializer
 
 
 class UserLoginAPIView(APIView):
@@ -24,3 +24,11 @@ class UserSignUpAPIView(APIView):
         user = serializer.save()
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
+
+class AccountVerificationAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = AccountVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        data = {'message': 'Congratulations your account has been verified'}
+        return Response(data, status=status.HTTP_200_OK)
