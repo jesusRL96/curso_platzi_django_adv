@@ -10,6 +10,9 @@ django==2.0.10
 # Rest framework
 djangorestframework==3.9.0
 
+# JWT
+pyjwt==1.7.1
+
 # Environment
 django-environ==0.4.5
 
