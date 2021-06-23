@@ -1,0 +1,12 @@
+GET http://localhost:8000/circles/ HTTP/1.1
+content-type: application/json
+
+###
+POST http://localhost:8000/circles/create/ HTTP/1.1
+content-type: application/json
+
+{
+    "name":"nombre de circulo",
+    "about":"circulo ejemplo",
+    "slug_name":"ce"
+}
