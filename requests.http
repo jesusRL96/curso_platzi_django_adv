@@ -6,7 +6,7 @@ POST http://localhost:8000/circles/create/ HTTP/1.1
 content-type: application/json
 
 {
-    "name":"nombre de circulo",
+    "name":"nombre de circulo 1",
     "about":"circulo ejemplo",
-    "slug_name":"ce"
+    "slug_name":"ce1"
 }
