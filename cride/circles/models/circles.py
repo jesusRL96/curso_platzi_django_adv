@@ -3,7 +3,7 @@ from django.db import models
 from cride.utils.models import CRideModel
 
 class Circle(CRideModel):
-    """Cirle model 
+    """Cirle model
     private group"""
     name = models.CharField('circle name', max_length=140)
     slug_name = models.SlugField('slug name', max_length=140, unique=True)
@@ -19,10 +19,12 @@ class Circle(CRideModel):
 
     is_limited = models.BooleanField(default=False, help_text="limited circles")
     limit = models.PositiveIntegerField(default=0, help_text="limit")
-    
+
+    members = models.ManyToManyField('users.User', through='circles.Membership', through_fields=('circle', 'user'))
+
     def __str__(self):
         return self.name
-    
+
     class Meta(CRideModel.Meta):
         """Class meta"""
         ordering = ['-rides_taken', '-rides_offered']
