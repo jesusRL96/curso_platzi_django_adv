@@ -18,3 +18,15 @@ content-type: application/json
     "email": "xxxx",
     "password": "xxxx."
 }
+###
+POST http://localhost:8000/users/signup/ HTTP/1.1
+content-type: application/json
+
+{
+    "email": "pepe@pecas.com",
+    "username": "pepe",
+    "password": "12asd5sdD1.",
+    "password_confirmation": "12asd5sdD1.",
+    "first_name":"pepe",
+    "last_name":"pecas"
+}
