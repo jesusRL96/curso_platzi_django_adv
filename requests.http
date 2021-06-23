@@ -10,3 +10,11 @@ content-type: application/json
     "about":"circulo ejemplo",
     "slug_name":"ce1"
 }
+###
+POST http://localhost:8000/users/login/ HTTP/1.1
+content-type: application/json
+
+{
+    "email": "xxxx",
+    "password": "xxxx."
+}
