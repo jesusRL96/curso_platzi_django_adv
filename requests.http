@@ -1,6 +1,6 @@
-GET {{host}}/circles/ HTTP/1.1
-content-type: application/json
 
+GET {{host}}/circles/ HTTP/1.1
+Authorization: Token {{token}}
 ###
 POST {{host}}/circles/ HTTP/1.1
 content-type: application/json
@@ -38,8 +38,8 @@ POST {{host}}/users/login/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "xxxxx",
-    "password": "xxxxx"
+    "email": "pepe+5@gmail.com",
+    "password": "asdaunsakdnasda"
 }
 ###
 # USERS
@@ -48,11 +48,11 @@ POST {{host}}/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "xxx",
-    "username": "pepe4",
-    "password": "xxxx",
-    "password_confirmation": "xxxxx",
-    "first_name":"pepe2",
+    "email": "pepe+5@gmail.com",
+    "username": "pepe5",
+    "password": "asdaunsakdnasda",
+    "password_confirmation": "asdaunsakdnasda",
+    "first_name":"pepe5",
     "last_name":"pecas"
 }
 ###
@@ -60,5 +60,5 @@ POST {{host}}/users/verify/ HTTP/1.1
 content-type: application/json
 
 {
-    "token": "eyJ0eaasaiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoicGVwZTQiLCJleHAiOjE2MjQ3MzkzNzgsInR5cGUiOiJlbWFpbF9jb25maXJtYXRpb24ifQ._zxHOf-cogirXSkobO8Jieipzm5acDOqRz3EagUTN44"
+    "token": ""
 }
