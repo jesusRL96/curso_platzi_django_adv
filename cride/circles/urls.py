@@ -1,10 +1,14 @@
 from django.urls import path
 
-from django.urls import path
+from django.urls import path, include
 
-from cride.circles.views import create_circle, list_circles
+from cride.circles.views import circles as circles_views
+
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'circles', circles_views.CircleViewSet, basename='circle')
 
 urlpatterns = [
-    path('circles/', list_circles),
-    path('circles/create/', create_circle)
+    path('', include(router.urls)),
 ]

@@ -1,8 +1,8 @@
-GET http://localhost:8000/circles/ HTTP/1.1
+GET {{host}}/circles/ HTTP/1.1
 content-type: application/json
 
 ###
-POST http://localhost:8000/circles/create/ HTTP/1.1
+POST {{host}}/circles/ HTTP/1.1
 content-type: application/json
 
 {
@@ -11,7 +11,30 @@ content-type: application/json
     "slug_name":"ce1"
 }
 ###
-POST http://localhost:8000/users/login/ HTTP/1.1
+PUT {{host}}/circles/1/ HTTP/1.1
+content-type: application/json
+
+{
+    "name":"nombre de circulo 1.1",
+    "about":"circulo ejemplo",
+    "slug_name":"ce1_1"
+}
+###
+PATCH {{host}}/circles/1/ HTTP/1.1
+content-type: application/json
+
+{
+    "name":"nombre de circulo 1.1"
+}
+###
+DELETE {{host}}/circles/1/ HTTP/1.1
+content-type: application/json
+
+{
+    "name":"nombre de circulo 1.1"
+}
+###
+POST {{host}}/users/login/ HTTP/1.1
 content-type: application/json
 
 {
@@ -19,7 +42,9 @@ content-type: application/json
     "password": "xxxxx"
 }
 ###
-POST http://localhost:8000/users/signup/ HTTP/1.1
+# USERS
+
+POST {{host}}/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
@@ -31,7 +56,7 @@ content-type: application/json
     "last_name":"pecas"
 }
 ###
-POST http://localhost:8000/users/verify/ HTTP/1.1
+POST {{host}}/users/verify/ HTTP/1.1
 content-type: application/json
 
 {
