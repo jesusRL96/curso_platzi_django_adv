@@ -4,11 +4,14 @@ Authorization: Token {{token}}
 ###
 POST {{host}}/circles/ HTTP/1.1
 content-type: application/json
+Authorization: Token {{token}}
 
 {
     "name":"nombre de circulo 1",
     "about":"circulo ejemplo",
-    "slug_name":"ce1"
+    "slug_name":"ce1",
+    "limit": 10,
+    "is_limited": true
 }
 ###
 PUT {{host}}/circles/1/ HTTP/1.1
