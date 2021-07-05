@@ -1,13 +1,27 @@
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action
+
 
 
 from cride.users.serializers import UserLoginSerializer, UserModelSerializer, UserSignUpSerializer,AccountVerificationSerializer
 
 
-class UserLoginAPIView(APIView):
-    def post(self, request, *args, **kwargs):
+class UserViewSet(viewsets.GenericViewSet):
+    """User Viewset"""
+    @action(detail=False, methods=['post'])
+    def signup(self, request):
+        """User's signup"""
+        serializer = UserSignUpSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        data = UserModelSerializer(user).data
+        return Response(data, status=status.HTTP_201_CREATED)
+
+    @action(detail=False, methods=['post'])
+    def login(self, request):
+        """User's login"""
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
@@ -17,16 +31,9 @@ class UserLoginAPIView(APIView):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
-class UserSignUpAPIView(APIView):
-    def post(self, request, *args, **kwargs):
-        serializer = UserSignUpSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        data = UserModelSerializer(user).data
-        return Response(data, status=status.HTTP_201_CREATED)
-
-class AccountVerificationAPIView(APIView):
-    def post(self, request, *args, **kwargs):
+    @action(detail=False, methods=['post'])
+    def verify(self, request):
+        """Account verification"""
         serializer = AccountVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()

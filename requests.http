@@ -2,6 +2,9 @@
 GET {{host}}/circles/ HTTP/1.1
 Authorization: Token {{token}}
 ###
+GET {{host}}/circles/ce1 HTTP/1.1
+Authorization: Token {{token}}
+###
 POST {{host}}/circles/ HTTP/1.1
 content-type: application/json
 Authorization: Token {{token}}
@@ -9,13 +12,14 @@ Authorization: Token {{token}}
 {
     "name":"nombre de circulo 1",
     "about":"circulo ejemplo",
-    "slug_name":"ce1",
+    "slug_name":"ce2",
     "limit": 10,
     "is_limited": true
 }
 ###
-PUT {{host}}/circles/1/ HTTP/1.1
+PUT {{host}}/circles/18/ HTTP/1.1
 content-type: application/json
+Authorization: Token {{token}}
 
 {
     "name":"nombre de circulo 1.1",

@@ -15,6 +15,8 @@ from rest_framework.validators import UniqueValidator
 
 from cride.users.models import User, Profile
 
+
+
 class UserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -76,7 +78,6 @@ class UserSignUpSerializer(serializers.Serializer):
         }
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
         return token.decode()
-
 
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
