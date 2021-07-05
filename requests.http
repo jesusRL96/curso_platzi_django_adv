@@ -69,3 +69,7 @@ content-type: application/json
 {
     "token": ""
 }
+
+###
+GET {{host}}/users/pepe5 HTTP/1.1
+Authorization: Token {{token}}
