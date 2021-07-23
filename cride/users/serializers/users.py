@@ -1,3 +1,4 @@
+from cride.users.serializers.profiles import ProfileModelSerializer
 from django.contrib.auth import authenticate, password_validation
 from django.core.validators import RegexValidator
 from django.core.mail import EmailMultiAlternatives
@@ -14,13 +15,15 @@ from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
 from cride.users.models import User, Profile
+from cride.users.serializers.profiles import ProfileModelSerializer
 
 
 
 class UserModelSerializer(serializers.ModelSerializer):
+    profile = ProfileModelSerializer(read_only=True)
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'phone_number')
+        fields = ('username', 'email', 'first_name', 'last_name', 'phone_number', 'profile')
 
 class UserSignUpSerializer(serializers.Serializer):
     """User signup serializer"""

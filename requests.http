@@ -71,5 +71,43 @@ content-type: application/json
 }
 
 ###
-GET {{host}}/users/pepe5 HTTP/1.1
+GET {{host}}/users/pepe5/ HTTP/1.1
 Authorization: Token {{token}}
+
+###
+PUT {{host}}/users/pepe5/ HTTP/1.1
+Authorization: Token {{token}}
+
+###
+PATCH {{host}}/users/pepe5/ HTTP/1.1
+Authorization: Token {{token}}
+Content-Type: application/json
+
+{
+    "phone_number": "+999999999"
+}
+
+###
+PATCH {{host}}/users/pepe5/profile/ HTTP/1.1
+Authorization: Token {{token}}
+Content-Type: application/json
+
+{
+    "biography": "soy pepe"
+}
+
+###
+PUT {{host}}/users/pepe5/profile/ HTTP/1.1
+Authorization: Token {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: application/json; name="biography"
+
+soy pepe
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="picture"; filename="1.png"
+Content-Type: image/png
+
+< ./1.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
