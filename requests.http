@@ -111,3 +111,8 @@ Content-Type: image/png
 
 < ./1.png
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###
+GET {{host}}/circles/ce1/members/ HTTP/1.1
+Authorization: Token {{token}}

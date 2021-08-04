@@ -4,7 +4,7 @@ from rest_framework import viewsets, mixins
 from cride.circles.permissions.circles import IsCircleAdmin
 from rest_framework.permissions import IsAuthenticated
 
-from circles.serializers import CircleModelSerializer
+from cride.circles.serializers import CircleModelSerializer
 
 from cride.circles.models import Circle, Membership, circles
 
