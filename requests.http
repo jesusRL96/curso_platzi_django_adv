@@ -154,3 +154,18 @@ Authorization: Token {{token}}
 
 GET {{host}}/circles/?is_limited=true HTTP/1.1
 Authorization: Token {{token}}
+
+
+
+###
+POST {{host}}/circles/ce1/rides/ HTTP/1.1
+Authorization: Token {{token}}
+content-type: application/json
+
+{
+    "available_seats": 5,
+    "departure_location": "aqui",
+    "departure_date":"2021-08-05T09:09:34-05:00",
+    "arrival_location": "alla",
+    "arrival_date":"2021-08-05T09:10:34-05:00"
+}

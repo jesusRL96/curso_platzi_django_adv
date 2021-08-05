@@ -11,7 +11,7 @@ from cride.circles.permissions.memberships import IsActiveCircleMember
 
 
 
-class RideViewSet(mixins.CreateModelMixin, mixins.GenericModelMixin):
+class RideViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """Ride User"""
     serializer_class = CreateRideSerializer
     permission_classes = (IsAuthenticated, IsActiveCircleMember)
@@ -22,3 +22,8 @@ class RideViewSet(mixins.CreateModelMixin, mixins.GenericModelMixin):
         slug_name = kwargs['slug_name']
         self.circle = get_object_or_404(Circle, slug_name=slug_name)
         return super(RideViewSet, self).dispatch(request, *args, **kwargs)
+
+    def get_serializer_context(self):
+        context = super(RideViewSet, self).get_serializer_context()
+        context['circle'] = self.circle
+        return context
