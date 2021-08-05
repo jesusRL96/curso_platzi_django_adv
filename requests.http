@@ -137,3 +137,20 @@ content-type: application/json
 {
     "invitation_code": "GW0U1BX27Y"
 }
+
+
+###
+GET {{host}}/circles/ HTTP/1.1
+Authorization: Token {{token}}
+
+
+###
+GET {{host}}/circles/?search=ce1 HTTP/1.1
+Authorization: Token {{token}}
+###
+GET {{host}}/circles/?ordering=-name HTTP/1.1
+Authorization: Token {{token}}
+###
+
+GET {{host}}/circles/?is_limited=true HTTP/1.1
+Authorization: Token {{token}}

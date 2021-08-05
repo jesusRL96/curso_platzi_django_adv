@@ -9,6 +9,7 @@ django==2.0.10
 
 # Rest framework
 djangorestframework==3.9.0
+django-filter==2.0.0
 
 # JWT
 pyjwt==1.7.1
