@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from cride.users.serializers import UserModelSerializer
+
 from cride.rides.models import Ride
 from cride.circles.models import Membership, memberships
 
@@ -56,7 +58,18 @@ class CreateRideSerializer(serializers.ModelSerializer):
         return ride
 
 class RideModelSerializer(serializers.ModelSerializer):
+
+    offered_by = UserModelSerializer(read_only=True)
+    offered_in = serializers.StringRelatedField(read_only=True)
+    passengers = UserModelSerializer(read_only=True, many=True)
+
     class Meta:
         model = Ride
         fields = "__all__"
         read_only_fields = ('offered_by', 'offered_in', 'rating')
+
+    def update(self, instance, validated_data):
+        now = timezone.now()
+        if instance.departure_date <= now:
+            raise serializers.ValidationError('Ongoing rides can not be modified.')
+        return super(RideModelSerializer, self).update(instance, validated_data)

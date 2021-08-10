@@ -165,9 +165,9 @@ content-type: application/json
 {
     "available_seats": 4,
     "departure_location": "aqui",
-    "departure_date":"2021-08-05T18:09:34-05:00",
+    "departure_date":"2021-08-10T19:50:34-05:00",
     "arrival_location": "alla",
-    "arrival_date":"2021-08-05T19:10:34-05:00"
+    "arrival_date":"2021-08-10T23:10:34-05:00"
 }
 
 ###
@@ -179,3 +179,17 @@ content-type: application/json
 GET {{host}}/circles/ce1/rides/?search=aqui&ordering=available_seats HTTP/1.1
 Authorization: Token {{token}}
 content-type: application/json
+
+###
+PUT {{host}}/circles/ce1/rides/9/ HTTP/1.1
+Authorization: Token {{token}}
+content-type: application/json
+
+###
+PATCH {{host}}/circles/ce1/rides/10/ HTTP/1.1
+Authorization: Token {{token}}
+content-type: application/json
+
+{
+    "departure_location": "otro lado"
+}

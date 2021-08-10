@@ -10,12 +10,13 @@ from cride.circles.models import Circle
 
 from rest_framework.permissions import IsAuthenticated
 from cride.circles.permissions.memberships import IsActiveCircleMember
+from cride.rides.permissions.rides import IsRideOwner
 
 # Filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 
-class RideViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class RideViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """Ride User"""
     permission_classes = (IsAuthenticated, IsActiveCircleMember)
     filter_backends = (SearchFilter, OrderingFilter)
@@ -29,6 +30,13 @@ class RideViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.Gener
         slug_name = kwargs['slug_name']
         self.circle = get_object_or_404(Circle, slug_name=slug_name)
         return super(RideViewSet, self).dispatch(request, *args, **kwargs)
+
+    def get_permissions(self):
+        permissions = [IsAuthenticated, IsActiveCircleMember]
+        if self.action in ['update', 'partial_update']:
+            permissions.append(IsRideOwner)
+        return [p() for p in permissions]
+
 
     def get_serializer_context(self):
         context = super(RideViewSet, self).get_serializer_context()
