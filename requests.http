@@ -193,3 +193,8 @@ content-type: application/json
 {
     "departure_location": "otro lado"
 }
+
+###
+POST {{host}}/circles/ce1/rides/10/join/ HTTP/1.1
+Authorization: Token {{token}}
+content-type: application/json

@@ -1,10 +1,13 @@
 # django rest framework
 from datetime import timedelta
 from django.utils import timezone
-from rest_framework import mixins, viewsets
+from cride.rides import serializers
+from rest_framework import mixins, viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 
-from cride.rides.serializers import CreateRideSerializer, RideModelSerializer
+from cride.rides.serializers import CreateRideSerializer, RideModelSerializer, JoinRideSerializer
 
 from cride.circles.models import Circle
 
@@ -46,8 +49,20 @@ class RideViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,mixins.UpdateMo
     def get_serializer_class(self):
         if self.action=='create':
             return CreateRideSerializer
+        if self.action=='join':
+            return JoinRideSerializer
         return RideModelSerializer
 
     def get_queryset(self):
         offset = timezone.now() - timedelta(minutes=15)
         return self.circle.ride_set.filter(departure_date__gte=offset, is_active=True, available_seats__gte=1)
+
+    @action(detail=True, methods=['post'])
+    def join(self, request, *args, **kwargs):
+        ride = self.get_object()
+        serializer = JoinRideSerializer(ride, data={'passenger': request.user.pk}, context={'circle': self.circle, 'ride': ride}, partial=True)
+        serializer.is_valid(raise_exception=True)
+        ride = serializer.save()
+        data = RideModelSerializer(ride).data
+        return Response(data, status=status.HTTP_200_OK)
+

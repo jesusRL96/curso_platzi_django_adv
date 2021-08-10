@@ -3,6 +3,7 @@ from rest_framework import serializers
 from cride.users.serializers import UserModelSerializer
 
 from cride.rides.models import Ride
+from cride.users.models import User
 from cride.circles.models import Membership, memberships
 
 from datetime import timedelta
@@ -55,6 +56,57 @@ class CreateRideSerializer(serializers.ModelSerializer):
         profile.rides_offered += 1
         profile.save()
 
+        return ride
+class JoinRideSerializer(serializers.ModelSerializer):
+    passenger = serializers.IntegerField()
+
+    class Meta:
+        """Meta class"""
+        model = Ride
+        fields = ("passenger",)
+
+    def validate_passenger(self, data):
+        try:
+            user = User.objects.get(pk=data)
+        except User.DoesNotExist:
+            raise serializers.ValidationError('Invalid passenger.')
+        circle = self.context['circle']
+        try:
+            member = Membership.objects.get(user=user, circle=circle, is_active=True)
+        except Membership.DoesNotExist:
+            raise serializers.ValidationError('User is not an active member of the circle.')
+        self.context['user'] = user
+        self.context['member'] = member
+        return data
+
+    def validate(self, data):
+        offset = timezone.now() - timedelta(minutes=15)
+        ride = self.context['ride']
+        if ride.departure_date <= offset:
+            raise serializers.ValidationError("You can't join this ride now.")
+        if ride.available_seats < 1:
+            raise serializers.ValidationError("Ride is already full.")
+        if Ride.objects.filter(passengers__pk=data['passenger']):
+            raise serializers.ValidationError("Passenger is already in this ride.")
+
+        return data
+
+    def update(self, instance, data):
+        ride = instance
+        user = self.context['user']
+        circle = self.context['circle']
+
+        ride.passengers.add(user)
+        profile = user.profile
+        profile.rides_taken += 1
+        profile.save()
+
+        member = self.context['member']
+        member.rides_taken += 1
+        member.save()
+
+        circle.rides_taken += 1
+        circle.save()
         return ride
 
 class RideModelSerializer(serializers.ModelSerializer):
