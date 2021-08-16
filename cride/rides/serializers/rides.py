@@ -86,7 +86,7 @@ class JoinRideSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You can't join this ride now.")
         if ride.available_seats < 1:
             raise serializers.ValidationError("Ride is already full.")
-        if Ride.objects.filter(passengers__pk=data['passenger']):
+        if ride.passengers.filter(pk=data['passenger']).exists():
             raise serializers.ValidationError("Passenger is already in this ride.")
 
         return data
