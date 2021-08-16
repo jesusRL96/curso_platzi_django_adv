@@ -55,11 +55,11 @@ POST {{host}}/users/signup/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "pepe+5@gmail.com",
-    "username": "pepe5",
+    "email": "pepe+7@gmail.com",
+    "username": "pepe7",
     "password": "asdaunsakdnasda",
     "password_confirmation": "asdaunsakdnasda",
-    "first_name":"pepe5",
+    "first_name":"pepe7",
     "last_name":"pecas"
 }
 ###

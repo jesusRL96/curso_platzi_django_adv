@@ -1,12 +1,9 @@
 from cride.users.serializers.profiles import ProfileModelSerializer
 from django.contrib.auth import authenticate, password_validation
 from django.core.validators import RegexValidator
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils import timezone
+
 from django.conf import settings
 
-from datetime import timedelta
 import jwt
 from jwt.exceptions import PyJWTError
 
@@ -16,6 +13,10 @@ from rest_framework.validators import UniqueValidator
 
 from cride.users.models import User, Profile
 from cride.users.serializers.profiles import ProfileModelSerializer
+
+
+# tasks
+from cride.taskapp.tasks import send_confirmation_email
 
 
 
@@ -55,32 +56,9 @@ class UserSignUpSerializer(serializers.Serializer):
         data.pop('password_confirmation')
         user = User.objects.create_user(**data, is_active=True, is_client=True)
         profile = Profile.objects.create(user=user)
-        self.send_confirmation_email(user)
+        send_confirmation_email.delay(user_pk=user.pk )
         return user
 
-    def send_confirmation_email(self, user):
-        """Send account verifiacion email"""
-        verification_token = self.gen_verification_token(user)
-        subject = f"Welcome {user.username}! Verify your account to start using the app"
-        from_email = 'Comparte Ride <noreply@comparteride.com>'
-        to = user.email
-        content = render_to_string('email/users/account_verification.html', {'token': verification_token, 'user': user})
-
-        msg = EmailMultiAlternatives(subject, content, from_email, [to])
-        msg.attach_alternative(content, "text/html")
-        msg.send()
-        pass
-
-    def gen_verification_token(self, user):
-        """Create JWT"""
-        exp_date = timezone.now() + timedelta(days=3)
-        payload = {
-            'user': user.username,
-            'exp': int(exp_date.timestamp()),
-            'type': 'email_confirmation'
-        }
-        token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
-        return token.decode()
 
 class UserLoginSerializer(serializers.Serializer):
     """User login serializer"""
