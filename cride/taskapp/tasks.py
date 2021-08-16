@@ -41,7 +41,7 @@ def send_confirmation_email(user_pk):
     msg.send()
     pass
 
-@periodic_task(name='disable_finished_rides', run_every=timedelta(seconds=5))
+@periodic_task(name='disable_finished_rides', run_every=timedelta(days=1))
 def disable_finished_rides():
     now = timezone.now()
     offset = now + timedelta(seconds=5)
