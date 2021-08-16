@@ -4,11 +4,12 @@ from datetime import timedelta
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from cride.users.models import User, Profile
+from cride.rides.models import Ride
 
 import jwt
 import time
 # Celery
-from celery.decorators import task
+from celery.decorators import task, periodic_task
 
 
 def gen_verification_token(user):
@@ -39,3 +40,10 @@ def send_confirmation_email(user_pk):
     msg.attach_alternative(content, "text/html")
     msg.send()
     pass
+
+@periodic_task(name='disable_finished_rides', run_every=timedelta(seconds=5))
+def disable_finished_rides():
+    now = timezone.now()
+    offset = now + timedelta(seconds=5)
+    rides = Ride.objects.filter(arrival_date__gte=now, arrival_date__lte=offset, is_active=True)
+    rides.update(is_active=False)
